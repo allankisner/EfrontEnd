@@ -201,18 +201,6 @@ export default function Venda() {
                         <br />
                         <input type='text' name="qtdVenda" className="form-control" onChange={handleChange} />
                         <br />
-                        <label>Valor Unitario da Venda </label>
-                        <br />
-                        <input type='text' name="vlrUnitario" className="form-control" onChange={handleChange} />
-                        <br />
-                        <label>Data Da Venda </label>
-                        <br />
-                        <input type='text' name="dthVenda" className="form-control" onChange={handleChange} />
-                        <br />
-                        <label>Valor Total da Venda</label>
-                        <br />
-                        <input type='text' name="vlrTotalVenda" className="form-control" onChange={handleChange} />
-                        <br />
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -229,7 +217,7 @@ export default function Venda() {
                         <input type='text' readOnly value={vendaSelected && vendaSelected.idVenda} />
                         <br />
                         <label>Id Cliente: </label>
-                        <input required type='text' value={vendaSelected && vendaSelected.idCliente} name="idCliente" className="form-control" onChange={handleChange} />
+                        <input required readOnly type='text' value={vendaSelected && vendaSelected.idCliente} name="idCliente" className="form-control" onChange={handleChange} />
                         <br />
                         <label>Id Produto: </label>
                         <br />
