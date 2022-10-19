@@ -12,6 +12,25 @@ export default function Produto() {
     const [includeModal, setIncludeModal] = useState(false);
     const [modalEditar, setModalEditar] = useState(false);
     const [modalDelete, setModalDelete] = useState(false);
+    // filtrar dados
+    const [searchInput, setSearchInput] = useState('');
+    const [filtro, setFiltro] = useState([]);
+
+    const SearchCliente = (searchValue) => {
+
+        setSearchInput(searchValue);
+
+        if (searchInput !== ' ') {
+            const dadosFiltrados = info.filter((item) => {
+                return Object.values(item).join('').toLowerCase()
+                    .includes(searchInput.toLowerCase())
+            });
+            setFiltro(dadosFiltrados);
+        }
+        else {
+            setFiltro(info);
+        }
+    }
 
 
     // Listar Produto
@@ -95,11 +114,18 @@ export default function Produto() {
         <div className="container">
             <br />
             <h1>Produtos</h1>
-            <header>
-                <img alt=''></img>
-                <button onClick={() => openCloseIncludeModal()} className="btn btn-success">Cadastrar Novo Produto</button>
-            </header>
-            <table className="table table-bordered">
+            <div style={{ display: ' flex', justifyContent: 'space-between' }}>
+                <header>
+                    <img alt=''></img>
+                    <button onClick={() => openCloseIncludeModal()} className="btn btn-success">Cadastrar Novo Produto</button>
+                </header>
+                <form>
+                    <input className="searched" type='text'
+                        placeholder="Buscar Produto"
+                        onChange={(e) => SearchCliente(e.target.value)} />
+                </form>
+            </div>
+            <table className="table table table-striped">
                 <thead>
                     <tr>
                         <th>Produto Id</th>
@@ -108,20 +134,36 @@ export default function Produto() {
                         <th>Operação</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {info && info?.map(produto => (
-                        <tr key={produto.idProduto}>
-                            <td>{produto.idProduto}</td>
-                            <td>{produto.dscProduto}</td>
-                            <td>{produto.vlrUnitario}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" onClick={() => selectProduto(produto, "Editar")}>Editar</button>
-                                <button type="button" class="btn btn-danger" onClick={() => selectProduto(produto, "Excluir")}>Excluir</button>
-                            </td>
-                        </tr>
-
-                    ))}
-                </tbody>
+                {searchInput.length > 0 ? (
+                    <tbody>
+                        {filtro.map(produto => (
+                            <tr key={produto.idProduto}>
+                                <td>{produto.idProduto}</td>
+                                <td>{produto.dscProduto}</td>
+                                <td>{produto.vlrUnitario}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onClick={() => selectProduto(produto, "Editar")}>Editar</button>
+                                    <button type="button" class="btn btn-danger" onClick={() => selectProduto(produto, "Excluir")}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                ) : (
+                    <tbody>
+                    { info && info?.map(produto => (
+                        
+                            <tr key={produto.idProduto}>
+                                <td>{produto.idProduto}</td>
+                                <td>{produto.dscProduto}</td>
+                                <td>{produto.vlrUnitario}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onClick={() => selectProduto(produto, "Editar")}>Editar</button>
+                                    <button type="button" class="btn btn-danger" onClick={() => selectProduto(produto, "Excluir")}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    )} 
             </table>
 
             <Modal isOpen={includeModal}>

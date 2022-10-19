@@ -46,7 +46,7 @@ export default function FromApi() {
         <div className='api-container'>
             <h1>Relação de Dados da Api</h1>
             <h3>Lista de Vendas da Api Campos Dealer</h3>
-            <table responsive="sm">
+            <table responsive="sm" className="table table-striped" >
                 <thead>
                     <tr>
                         <th>IdVenda</th>
@@ -78,7 +78,7 @@ export default function FromApi() {
                 </tbody>
             </table>
             <h3>Lista de Clientes da Api Campos Dealer</h3>
-            <table responsive="md">
+            <table responsive="md" className="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -98,7 +98,7 @@ export default function FromApi() {
                 </tbody>
             </table>
             <h3>Lista de Produtos da Api Campos Dealer</h3>
-            <table responsive="lg">
+            <table responsive="lg" className="table table-striped">
                 <thead>
                     <tr>
                         <th>Id</th>

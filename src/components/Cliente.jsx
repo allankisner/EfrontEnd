@@ -12,16 +12,18 @@ export default function Cliente() {
     const [includeModal, setIncludeModal] = useState(false);
     const [modalEditar, setModalEditar] = useState(false);
     const [modalDelete, setModalDelete] = useState(false);
+    // filtrar dados
     const [searchInput, setSearchInput] = useState('');
     const [filtro, setFiltro] = useState([]);
 
     const SearchCliente = (searchValue) => {
 
-        setSearchInput(searchValue)
+        setSearchInput(searchValue);
 
-        if (searchInput != ' ') {
+        if (searchInput !== ' ') {
             const dadosFiltrados = info.filter((item) => {
-                return Object.values(item.nmCliente).join('').toLocaleLowerCase.includes(searchInput.toLocaleLowerCase())
+                return Object.values(item).join('').toLowerCase()
+                    .includes(searchInput.toLowerCase())
             });
             setFiltro(dadosFiltrados);
         }
@@ -77,6 +79,7 @@ export default function Cliente() {
 
     useEffect(() => {
         getCliente();
+
     }, [info])
 
     const handleChange = e => {
@@ -121,7 +124,7 @@ export default function Cliente() {
                         onChange={(e) => SearchCliente(e.target.value)} />
                 </form>
             </div>
-            <table className="table table-bordered">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Cliente Id</th>
@@ -132,7 +135,7 @@ export default function Cliente() {
                 </thead>
                 {searchInput.length > 0 ? (
                     <tbody>
-                        {info && info?.map(cliente => (
+                        {filtro.map(cliente => (
                             <tr key={cliente.idCliente}>
                                 <td>{cliente.idCliente}</td>
                                 <td>{cliente.nmCliente}</td>
@@ -146,7 +149,7 @@ export default function Cliente() {
                     </tbody>
                 ) : (
                     <tbody>
-                        {info && info?.map(cliente => (
+                        {info.map(cliente => (
                             <tr key={cliente.idCliente}>
                                 <td>{cliente.idCliente}</td>
                                 <td>{cliente.nmCliente}</td>
@@ -156,23 +159,21 @@ export default function Cliente() {
                                     <button type="button" onClick={() => selectCliente(cliente, "Excluir")} class="btn btn-danger">Excluir</button>
                                 </td>
                             </tr>
-
                         ))}
                     </tbody>
                 )}
             </table>
-
             <Modal isOpen={includeModal}>
                 <ModalHeader>Cadastrar Cliente</ModalHeader>
                 <ModalBody>
                     <div>
                         <label>Nome: </label>
                         <br />
-                        <input type='text' name="nmCliente" className="form-control" onChange={handleChange} />
+                        <input required type='text' name="nmCliente" className="form-control" onChange={handleChange} />
                         <br />
                         <label>Cidade: </label>
                         <br />
-                        <input type='text' name="cidade" className="form-control" onChange={handleChange} />
+                        <input required type='text' name="cidade" className="form-control" onChange={handleChange} />
                         <br />
                     </div>
                 </ModalBody>
